@@ -658,11 +658,11 @@ h3 {
 .cube-trigger {
   position: relative;
   display: grid;
-  width: 96px;
-  height: 96px;
+  width: 78px;
+  height: 78px;
   place-items: center;
   border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line));
-  border-radius: 24px;
+  border-radius: 20px;
   background:
     radial-gradient(circle at 48% 34%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 58%),
     color-mix(in srgb, var(--bg) 90%, var(--panel));
@@ -680,18 +680,11 @@ h3 {
     transform 180ms ease;
 }
 
-button.cube-trigger {
-  position: fixed !important;
-  top: calc(var(--header) + 22px) !important;
-  right: auto !important;
-  left: calc(100vw - 128px) !important;
-}
-
 .cube-trigger::after {
   position: absolute;
   left: 50%;
   bottom: -12px;
-  padding: 5px 10px;
+  padding: 4px 9px;
   border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--line));
   border-radius: 999px;
   background: color-mix(in srgb, var(--panel) 90%, var(--bg));
@@ -733,42 +726,14 @@ button.cube-trigger {
 }
 
 .cube-trigger .rubiks-mini {
-  --cube-size: 82px;
-  --cubie-size: 15px;
-  --cubie-half: 7.5px;
-  --cubie-spacing: 15.75px;
-  transform: translate3d(0, -11px, 0);
-}
-
-.cube-trigger .rubiks-cubie {
-  display: none;
-}
-
-.rubiks-trigger-svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
-  width: var(--cube-size);
-  height: calc(var(--cube-size) * 0.92);
-  overflow: visible;
-  filter:
-    drop-shadow(0 10px 12px rgba(0, 0, 0, 0.3))
-    drop-shadow(0 0 14px color-mix(in srgb, var(--accent) 12%, transparent));
-  shape-rendering: geometricPrecision;
-  transform: translate(-50%, -50%);
-}
-
-.rubiks-trigger-face {
-  stroke: #050a0b;
-  stroke-linejoin: miter;
-  stroke-width: 3;
-}
-
-.rubiks-trigger-tile {
-  stroke: #050a0b;
-  stroke-linejoin: miter;
-  stroke-width: 1.8;
+  --cube-size: 60px;
+  --cubie-size: 12.5px;
+  --cubie-half: 6.25px;
+  --cubie-spacing: 13.1px;
+  --trigger-cube-y: -6px;
+  --trigger-cube-float-y: -10px;
+  animation: trigger-cube-float 3.4s ease-in-out infinite;
+  transform: translate3d(0, var(--trigger-cube-y), 0) rotateX(-24deg) rotateY(-35deg);
 }
 
 .rubiks-mini-large {
@@ -1164,6 +1129,17 @@ button.cube-trigger {
   }
 }
 
+@keyframes trigger-cube-float {
+  0%,
+  100% {
+    transform: translate3d(0, var(--trigger-cube-y), 0) rotateX(-24deg) rotateY(-35deg);
+  }
+
+  50% {
+    transform: translate3d(0, var(--trigger-cube-float-y), 0) rotateX(-24deg) rotateY(-35deg);
+  }
+}
+
 @keyframes cubie-layer-turn {
   0% {
     transform: rotateX(0deg) translate3d(var(--tx), var(--ty), var(--tz));
@@ -1392,26 +1368,26 @@ button.cube-trigger {
 
   .rubiks-widget {
     top: calc(var(--header) + 14px);
-    right: 22px;
-    right: calc(22px + env(safe-area-inset-right, 0px));
+    right: max(14px, env(safe-area-inset-right));
     left: auto;
   }
 
   .cube-trigger {
-    width: 92px;
-    height: 92px;
-    border-radius: 24px;
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
   }
 
   button.cube-trigger {
+    position: fixed !important;
     top: calc(var(--header) + 14px) !important;
     right: auto !important;
     left: 60vw !important;
   }
 
   .cube-trigger::after {
-    bottom: -11px;
-    padding: 4px 9px;
+    bottom: -10px;
+    padding: 3px 8px;
     font-size: 0.55rem;
   }
 
@@ -1423,11 +1399,13 @@ button.cube-trigger {
   }
 
   .cube-trigger .rubiks-mini {
-    --cube-size: 76px;
-    --cubie-size: 14px;
-    --cubie-half: 7px;
-    --cubie-spacing: 14.7px;
-    transform: translate3d(0, -10px, 0);
+    --cube-size: 54px;
+    --cubie-size: 11.25px;
+    --cubie-half: 5.625px;
+    --cubie-spacing: 11.8px;
+    --trigger-cube-y: -5px;
+    --trigger-cube-float-y: -8px;
+    transform: translate3d(0, var(--trigger-cube-y), 0) rotateX(-24deg) rotateY(-35deg);
   }
 
   .rubiks-popover {
