@@ -730,8 +730,8 @@ h3 {
   --cubie-size: 12.5px;
   --cubie-half: 6.25px;
   --cubie-spacing: 13.1px;
-  --trigger-cube-y: -6px;
-  --trigger-cube-float-y: -9px;
+  --trigger-cube-y: 2px;
+  --trigger-cube-float-y: -1px;
   transform: translate3d(0, var(--trigger-cube-y), 0);
 }
 
@@ -1456,8 +1456,8 @@ h3 {
     --cubie-size: 11.25px;
     --cubie-half: 5.625px;
     --cubie-spacing: 11.8px;
-    --trigger-cube-y: -5px;
-    --trigger-cube-float-y: -7px;
+    --trigger-cube-y: 2px;
+    --trigger-cube-float-y: -1px;
     transform: translate3d(0, var(--trigger-cube-y), 0);
   }
 
