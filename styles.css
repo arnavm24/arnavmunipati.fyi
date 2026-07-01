@@ -172,7 +172,25 @@ body.rubiks-active {
 }
 
 .theme-icon {
-  font-size: 1rem;
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.theme-icon-sun {
+  display: none;
+}
+
+[data-theme="light"] .theme-icon-moon {
+  display: none;
+}
+
+[data-theme="light"] .theme-icon-sun {
+  display: block;
 }
 
 .page-shell {
@@ -1429,13 +1447,6 @@ h3 {
     width: 68px;
     height: 68px;
     border-radius: 18px;
-  }
-
-  button.cube-trigger {
-    position: fixed !important;
-    top: calc(var(--header) + 14px) !important;
-    right: auto !important;
-    left: 60vw !important;
   }
 
   .cube-trigger::after {

@@ -6,7 +6,7 @@ The folder is named `arnavmunipati.fyi`, so the local path and deployment target
 
 ## Customize
 
-- LinkedIn URL should be verified before publishing.
+- LinkedIn is set to `https://www.linkedin.com/in/arnavmunipati/`.
 - GitHub is set to `https://github.com/arnavm24`.
 - Email is set to `arnav.munipati@gmail.com`.
 - Projects currently include ClutchCast AI and Delation.

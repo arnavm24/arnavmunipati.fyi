@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Arnav Munipati is a Quality Engineer Co-op at CIBC and engineering student at Western University."
+      content="Arnav Munipati - Quality Engineer Co-op at CIBC and Western Engineering student, building projects in software, AI, and quality engineering."
     />
-    <meta property="og:title" content="Arnav Munipati | Portfolio" />
+    <meta property="og:title" content="Arnav Munipati | Software, AI & Quality Engineering" />
     <meta property="og:type" content="website" />
     <meta
       property="og:description"
-      content="Quality engineering, software development, AI, and engineering systems."
+      content="Quality Engineer Co-op at CIBC and Western Engineering student, building projects in software, AI, and quality engineering."
     />
     <meta property="og:url" content="https://arnavmunipati.fyi/" />
     <meta property="og:image" content="https://arnavmunipati.fyi/assets/social-preview.png" />
@@ -22,16 +22,16 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Arnav Munipati | Portfolio" />
+    <meta name="twitter:title" content="Arnav Munipati | Software, AI & Quality Engineering" />
     <meta
       name="twitter:description"
-      content="Quality engineering, software development, AI, and engineering systems."
+      content="Quality Engineer Co-op at CIBC and Western Engineering student, building projects in software, AI, and quality engineering."
     />
     <meta name="twitter:image" content="https://arnavmunipati.fyi/assets/social-preview.png" />
     <link rel="canonical" href="https://arnavmunipati.fyi/" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="assets/icon-512.png" />
-    <title>Arnav Munipati | Portfolio</title>
+    <title>Arnav Munipati | Software, AI & Quality Engineering</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -49,7 +49,13 @@
       </nav>
 
       <button class="theme-button" type="button" data-theme-toggle aria-label="Toggle color theme">
-        <span class="theme-icon" aria-hidden="true">🌙</span>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M20 14.3A8.5 8.5 0 1 1 9.7 4a6.6 6.6 0 0 0 10.3 10.3Z" />
+        </svg>
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4.2" />
+          <path d="M12 2.5v3M12 18.5v3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M2.5 12h3M18.5 12h3M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1" />
+        </svg>
       </button>
     </header>
 
@@ -159,9 +165,8 @@
                 <h3>Bachelor of Engineering Science</h3>
                 <p class="company">Western University - Engineering</p>
                 <p>
-                  Building engineering fundamentals with an interest in AI, software development,
-                  engineering systems, and Java, while also pursuing the Ivey Business leadership
-                  certificate to strengthen leadership, strategy, and business communication skills.
+                  Engineering student focused on software development, AI, and Java, while
+                  completing the Ivey Business leadership certificate alongside the degree.
                 </p>
               </div>
             </article>
@@ -247,14 +252,24 @@
                 </div>
                 <h3>ClutchCast AI</h3>
                 <p>
-                  NBA win-probability and game-intelligence platform that turns play-by-play data
-                  into game-state features, compares probability models fairly, selects a champion
-                  model, and presents results in a polished Streamlit dashboard.
+                  NBA win-probability platform that engineers 85 game-state features from
+                  play-by-play data and benchmarks four models head-to-head (a rule-based
+                  baseline, logistic regression, random forest, and a PyTorch neural net) on
+                  held-out games split by game ID to prevent leakage, then auto-selects the top
+                  performer as the live champion model for real-time inference.
                 </p>
                 <dl class="project-facts" aria-label="ClutchCast AI project details">
                   <div>
                     <dt>Stack</dt>
                     <dd>Python, pandas, scikit-learn, PyTorch, Streamlit, Plotly, Flask, SocketIO, nba_api</dd>
+                  </div>
+                  <div>
+                    <dt>Evaluation</dt>
+                    <dd>Ranked by Brier score, log-loss, ROC-AUC, and accuracy on 28,463 held-out plays across 60 games from a 300-game season sample</dd>
+                  </div>
+                  <div>
+                    <dt>Result</dt>
+                    <dd>PyTorch neural net won on Brier score (0.180), the primary calibration metric, reaching 71.5% accuracy and a 0.81 ROC-AUC as the live champion model</dd>
                   </div>
                 </dl>
                 <a class="inline-action" href="https://github.com/arnavm24/clutchcast-ai" target="_blank" rel="noreferrer">
@@ -278,9 +293,10 @@
                 </div>
                 <h3>Delation</h3>
                 <p>
-                  Local-first urban risk intelligence concept for Toronto, built around predictive
-                  ward-level risk briefings and live citizen incident reporting using Toronto Open
-                  Data, GIS signals, and agent orchestration.
+                  Edge-compute emergency intelligence prototype built at the NVIDIA Spark
+                  Hackathon Toronto, combining live voice, video, and GPS incident reports with
+                  Toronto Open Data, floodplain, and weather feeds to flag ward-level risk with
+                  no cloud calls required.
                 </p>
                 <dl class="project-facts" aria-label="Delation project details">
                   <div>
@@ -289,11 +305,11 @@
                   </div>
                   <div>
                     <dt>Role</dt>
-                    <dd>Owned the FastAPI API gateway layer for incident intake, STT/TTS routes, WebSocket telemetry, health checks, and agent-engine handoff.</dd>
+                    <dd>One of five engineers on the team. Built the FastAPI gateway: real-time speech-to-text and text-to-speech, WebSocket telemetry, and REST endpoints aggregating Toronto Open Data, TRCA floodplain, and Environment Canada weather into ward-level risk scores.</dd>
                   </div>
                   <div>
                     <dt>Outcome</dt>
-                    <dd>Helped turn live media reports into API responses and telemetry for a hackathon-ready urban risk demo.</dd>
+                    <dd>Shipped a fully working prototype in the 24-hour hackathon window, targeting sub-100ms end-to-end incident analysis (TensorRT-LLM INT4 on the team's on-site GB10 hardware).</dd>
                   </div>
                 </dl>
                 <a class="inline-action" href="https://github.com/AdrianShah/NVIDIA-SparkHacks" target="_blank" rel="noreferrer">

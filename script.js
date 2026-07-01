@@ -1,7 +1,6 @@
 const root = document.documentElement;
 const progress = document.querySelector("#scroll-progress");
 const themeToggle = document.querySelector("[data-theme-toggle]");
-const themeIcon = document.querySelector(".theme-icon");
 const cursorRibbon = document.querySelector(".cursor-ribbon");
 const year = document.querySelector("[data-year]");
 const navLinks = [...document.querySelectorAll(".nav-links a, .section-rail a")];
@@ -11,7 +10,6 @@ const sections = navLinks
 
 function applyTheme(theme) {
   root.dataset.theme = theme;
-  themeIcon.textContent = theme === "dark" ? "\u263e" : "\u2600";
   localStorage.setItem("portfolio-theme", theme);
 }
 
