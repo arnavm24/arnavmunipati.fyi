@@ -658,11 +658,11 @@ h3 {
 .cube-trigger {
   position: relative;
   display: grid;
-  width: 92px;
-  height: 92px;
+  width: 110px;
+  height: 110px;
   place-items: center;
   border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line));
-  border-radius: 24px;
+  border-radius: 28px;
   background:
     radial-gradient(circle at 48% 34%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 58%),
     color-mix(in srgb, var(--bg) 90%, var(--panel));
@@ -684,14 +684,14 @@ button.cube-trigger {
   position: fixed !important;
   top: calc(var(--header) + 22px) !important;
   right: auto !important;
-  left: calc(100vw - 120px) !important;
+  left: calc(100vw - 148px) !important;
 }
 
 .cube-trigger::after {
   position: absolute;
   left: 50%;
-  bottom: -13px;
-  padding: 4px 9px;
+  bottom: -12px;
+  padding: 5px 10px;
   border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--line));
   border-radius: 999px;
   background: color-mix(in srgb, var(--panel) 90%, var(--bg));
@@ -733,11 +733,11 @@ button.cube-trigger {
 }
 
 .cube-trigger .rubiks-mini {
-  --cube-size: 66px;
-  --cubie-size: 12.5px;
-  --cubie-half: 6.25px;
-  --cubie-spacing: 13.1px;
-  transform: translate3d(0, -8px, 0) rotateX(-24deg) rotateY(-35deg);
+  --cube-size: 82px;
+  --cubie-size: 15px;
+  --cubie-half: 7.5px;
+  --cubie-spacing: 15.75px;
+  transform: translate3d(0, -13px, 0) rotateX(-24deg) rotateY(-35deg);
 }
 
 .rubiks-mini-large {
@@ -1367,9 +1367,9 @@ button.cube-trigger {
   }
 
   .cube-trigger {
-    width: 82px;
-    height: 82px;
-    border-radius: 22px;
+    width: 98px;
+    height: 98px;
+    border-radius: 26px;
   }
 
   button.cube-trigger {
@@ -1379,8 +1379,8 @@ button.cube-trigger {
   }
 
   .cube-trigger::after {
-    bottom: -12px;
-    padding: 3px 8px;
+    bottom: -11px;
+    padding: 4px 9px;
     font-size: 0.55rem;
   }
 
@@ -1392,11 +1392,11 @@ button.cube-trigger {
   }
 
   .cube-trigger .rubiks-mini {
-    --cube-size: 60px;
-    --cubie-size: 11.25px;
-    --cubie-half: 5.625px;
-    --cubie-spacing: 11.8px;
-    transform: translate3d(0, -7px, 0) rotateX(-24deg) rotateY(-35deg);
+    --cube-size: 76px;
+    --cubie-size: 14px;
+    --cubie-half: 7px;
+    --cubie-spacing: 14.7px;
+    transform: translate3d(0, -12px, 0) rotateX(-24deg) rotateY(-35deg);
   }
 
   .rubiks-popover {
