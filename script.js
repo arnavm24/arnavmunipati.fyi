@@ -416,6 +416,7 @@ if (rubiksWidget) {
     const state = {
       element,
       cubies: [],
+      triggerSvg: null,
       solvedOrientation: null,
     };
 
@@ -449,6 +450,15 @@ if (rubiksWidget) {
           element.append(cubie);
         }
       }
+    }
+
+    if (element.closest(".cube-trigger")) {
+      state.triggerSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      state.triggerSvg.classList.add("rubiks-trigger-svg");
+      state.triggerSvg.setAttribute("viewBox", "0 0 100 88");
+      state.triggerSvg.setAttribute("aria-hidden", "true");
+      state.triggerSvg.setAttribute("focusable", "false");
+      element.append(state.triggerSvg);
     }
 
     return state;
@@ -491,6 +501,104 @@ if (rubiksWidget) {
       renderCubiePosition(cube, cubie, spacing);
       renderCubieStickers(cubie);
     });
+
+    renderTriggerCube(cube);
+  }
+
+  function findCubie(cube, position) {
+    return cube.cubies.find(
+      (cubie) =>
+        cubie.position.x === position.x &&
+        cubie.position.y === position.y &&
+        cubie.position.z === position.z,
+    );
+  }
+
+  function getFaceColor(cube, side, position) {
+    return findCubie(cube, position)?.stickers[side] || "#0b1011";
+  }
+
+  function mixPoint(start, end, amount) {
+    return {
+      x: start.x + (end.x - start.x) * amount,
+      y: start.y + (end.y - start.y) * amount,
+    };
+  }
+
+  function quadPoint(quad, u, v) {
+    const top = mixPoint(quad[0], quad[1], u);
+    const bottom = mixPoint(quad[3], quad[2], u);
+    return mixPoint(top, bottom, v);
+  }
+
+  function drawTriggerPolygon(svg, points, fill, className = "rubiks-trigger-tile") {
+    const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    polygon.classList.add(className);
+    polygon.setAttribute("fill", fill);
+    polygon.setAttribute("points", points.map((point) => `${point.x},${point.y}`).join(" "));
+    svg.append(polygon);
+  }
+
+  function drawTriggerFace(svg, cube, face) {
+    drawTriggerPolygon(svg, face.quad, "#050a0b", "rubiks-trigger-face");
+
+    const gap = 0.02;
+    for (let row = 0; row < 3; row += 1) {
+      for (let column = 0; column < 3; column += 1) {
+        const u0 = column / 3 + gap;
+        const u1 = (column + 1) / 3 - gap;
+        const v0 = row / 3 + gap;
+        const v1 = (row + 1) / 3 - gap;
+        const points = [
+          quadPoint(face.quad, u0, v0),
+          quadPoint(face.quad, u1, v0),
+          quadPoint(face.quad, u1, v1),
+          quadPoint(face.quad, u0, v1),
+        ];
+
+        drawTriggerPolygon(svg, points, face.colorAt(cube, row, column));
+      }
+    }
+  }
+
+  function renderTriggerCube(cube) {
+    if (!cube.triggerSvg) return;
+
+    const svg = cube.triggerSvg;
+    svg.replaceChildren();
+
+    [
+      {
+        quad: [
+          { x: 18, y: 21 },
+          { x: 50, y: 9 },
+          { x: 82, y: 21 },
+          { x: 50, y: 34 },
+        ],
+        colorAt: (currentCube, row, column) =>
+          getFaceColor(currentCube, "top", { x: column - 1, y: 1, z: 1 - row }),
+      },
+      {
+        quad: [
+          { x: 50, y: 34 },
+          { x: 82, y: 21 },
+          { x: 82, y: 59 },
+          { x: 50, y: 73 },
+        ],
+        colorAt: (currentCube, row, column) =>
+          getFaceColor(currentCube, "right", { x: 1, y: 1 - row, z: 1 - column }),
+      },
+      {
+        quad: [
+          { x: 18, y: 21 },
+          { x: 50, y: 34 },
+          { x: 50, y: 73 },
+          { x: 18, y: 59 },
+        ],
+        colorAt: (currentCube, row, column) =>
+          getFaceColor(currentCube, "front", { x: column - 1, y: 1 - row, z: 1 }),
+      },
+    ].forEach((face) => drawTriggerFace(svg, cube, face));
   }
 
   function queueCubeRender() {

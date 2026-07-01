@@ -731,9 +731,51 @@ h3 {
   --cubie-half: 6.25px;
   --cubie-spacing: 13.1px;
   --trigger-cube-y: -6px;
-  --trigger-cube-float-y: -10px;
-  animation: trigger-cube-float 3.4s ease-in-out infinite;
-  transform: translate3d(0, var(--trigger-cube-y), 0) rotateX(-24deg) rotateY(-35deg);
+  --trigger-cube-float-y: -9px;
+  transform: translate3d(0, var(--trigger-cube-y), 0);
+}
+
+.cube-trigger .cubie-face {
+  border-radius: 0;
+}
+
+.cube-trigger .cubie-sticker {
+  inset: 6%;
+  border-radius: 0;
+}
+
+.cube-trigger .rubiks-cubie {
+  display: none;
+}
+
+.rubiks-trigger-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 64px;
+  height: 57px;
+  overflow: visible;
+  filter:
+    drop-shadow(0 9px 9px rgba(0, 0, 0, 0.28))
+    drop-shadow(0 0 11px color-mix(in srgb, var(--accent) 12%, transparent));
+  shape-rendering: geometricPrecision;
+  transform: translate(-50%, calc(-50% + var(--trigger-cube-y)));
+  animation: trigger-svg-float 3.4s ease-in-out infinite;
+}
+
+.rubiks-trigger-face,
+.rubiks-trigger-tile {
+  stroke: #050a0b;
+  stroke-linejoin: miter;
+}
+
+.rubiks-trigger-face {
+  stroke-width: 3;
+}
+
+.rubiks-trigger-tile {
+  stroke-width: 1.6;
 }
 
 .rubiks-mini-large {
@@ -1140,6 +1182,17 @@ h3 {
   }
 }
 
+@keyframes trigger-svg-float {
+  0%,
+  100% {
+    transform: translate(-50%, calc(-50% + var(--trigger-cube-y)));
+  }
+
+  50% {
+    transform: translate(-50%, calc(-50% + var(--trigger-cube-float-y)));
+  }
+}
+
 @keyframes cubie-layer-turn {
   0% {
     transform: rotateX(0deg) translate3d(var(--tx), var(--ty), var(--tz));
@@ -1404,8 +1457,21 @@ h3 {
     --cubie-half: 5.625px;
     --cubie-spacing: 11.8px;
     --trigger-cube-y: -5px;
-    --trigger-cube-float-y: -8px;
-    transform: translate3d(0, var(--trigger-cube-y), 0) rotateX(-24deg) rotateY(-35deg);
+    --trigger-cube-float-y: -7px;
+    transform: translate3d(0, var(--trigger-cube-y), 0);
+  }
+
+  .cube-trigger .cubie-face {
+    border-radius: 0;
+  }
+
+  .cube-trigger .cubie-sticker {
+    border-radius: 0;
+  }
+
+  .rubiks-trigger-svg {
+    width: 56px;
+    height: 50px;
   }
 
   .rubiks-popover {
