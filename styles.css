@@ -1011,55 +1011,24 @@ h3 {
   z-index: 0;
 }
 
-.rubiks-feedback {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 8;
-  display: grid;
-  width: 62px;
-  height: 62px;
-  place-items: center;
-  border: 2px solid currentColor;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  font-size: 2rem;
-  font-weight: 900;
-  line-height: 1;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8);
-  pointer-events: none;
-}
-
-.rubiks-feedback.is-visible {
-  animation: feedback-pop 900ms ease forwards;
-}
-
-.rubiks-feedback.is-correct {
-  color: #42d875;
-}
-
-.rubiks-feedback.is-wrong {
-  color: #e95656;
-}
-
 .rubiks-loading {
   position: relative;
   z-index: 1;
   display: flex;
   gap: 9px;
   align-items: center;
-  min-height: 18px;
+  min-height: 22px;
   margin: -2px 0 6px;
   opacity: 0;
   pointer-events: none;
 }
 
-.rubiks-loading.is-active {
+.rubiks-loading.is-active,
+.rubiks-loading.is-result {
   opacity: 1;
 }
 
-.rubiks-loading span {
+.rubiks-loading-dot {
   width: 9px;
   height: 9px;
   border-radius: 999px;
@@ -1069,12 +1038,47 @@ h3 {
   animation: loading-dot 900ms ease-in-out infinite;
 }
 
-.rubiks-loading span:nth-child(2) {
+.rubiks-loading-dot:nth-child(2) {
   animation-delay: 150ms;
 }
 
-.rubiks-loading span:nth-child(3) {
+.rubiks-loading-dot:nth-child(3) {
   animation-delay: 300ms;
+}
+
+.rubiks-loading.is-result .rubiks-loading-dot {
+  display: none;
+}
+
+.rubiks-loading-result {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+.rubiks-loading.is-result .rubiks-loading-result {
+  display: grid;
+}
+
+.rubiks-loading-result.is-visible {
+  animation: loading-result-pop 480ms ease forwards;
+}
+
+.rubiks-loading-result.is-correct {
+  color: #42d875;
+}
+
+.rubiks-loading-result.is-wrong {
+  color: #e95656;
 }
 
 .rubiks-close {
@@ -1255,25 +1259,20 @@ h3 {
   }
 }
 
-@keyframes feedback-pop {
+@keyframes loading-result-pop {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.76);
+    transform: scale(0.6);
   }
 
-  18% {
+  55% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.06);
-  }
-
-  72% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(1.15);
   }
 
   100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

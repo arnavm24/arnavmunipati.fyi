@@ -816,12 +816,18 @@ if (rubiksWidget) {
   }
 
   function showFeedback(isCorrect) {
-    const badge = document.createElement("div");
-    badge.className = `rubiks-feedback ${isCorrect ? "is-correct" : "is-wrong"} is-visible`;
-    badge.textContent = isCorrect ? "\u2713" : "\u00d7";
-    rubiksWidget.querySelector(".rubiks-stage-cube").append(badge);
+    const resultIcon = rubiksWidget.querySelector("[data-rubiks-loading-result]");
+    resultIcon.textContent = isCorrect ? "\u2713" : "\u00d7";
+    resultIcon.classList.remove("is-correct", "is-wrong", "is-visible");
+    resultIcon.classList.add(isCorrect ? "is-correct" : "is-wrong");
+    void resultIcon.offsetWidth;
+    resultIcon.classList.add("is-visible");
+    loading?.classList.add("is-result");
     shakePanel();
-    window.setTimeout(() => badge.remove(), 920);
+    window.setTimeout(() => {
+      loading?.classList.remove("is-result");
+      resultIcon.classList.remove("is-visible");
+    }, 520);
   }
 
   async function twistCube(finalState, onComplete = () => {}) {
