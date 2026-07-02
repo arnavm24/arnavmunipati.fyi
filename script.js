@@ -478,8 +478,16 @@ if (rubiksWidget) {
   }
 
   function renderCubiePosition(cube, cubie, spacing = getCubeSpacing(cube)) {
+    // Positions must render in the SAME coordinate space the cubie faces are
+    // placed in (see cubie-face-* in styles.css) so a layer turn's single
+    // rigid rotation carries both the orbit and the painted faces together.
+    // Do NOT negate any axis here: mirroring one axis makes position space
+    // opposite-handed to face space, and then no rotation direction can land
+    // both the cubie and its stickers correctly -- colors visibly swap at the
+    // end of X/Z turns. CSS +Y points down, so the model's +Y ("top") renders
+    // downward; the base rotateX tilt below is oriented to suit that.
     cubie.element.style.setProperty("--tx", `${cubie.position.x * spacing}px`);
-    cubie.element.style.setProperty("--ty", `${cubie.position.y * -spacing}px`);
+    cubie.element.style.setProperty("--ty", `${cubie.position.y * spacing}px`);
     cubie.element.style.setProperty("--tz", `${cubie.position.z * spacing}px`);
   }
 
@@ -709,14 +717,12 @@ if (rubiksWidget) {
   }
 
   function turnTransform(move) {
-    // renderCubiePosition renders the model's Y axis flipped (CSS Y grows
-    // downward), which only cancels out cleanly for Y-axis turns. X and Z
-    // turns rotate through Y, so their on-screen spin has to run the
-    // opposite way from the model's direction to land on the same result
-    // rotateVector/rotateStickers computes, or the colors snap to the wrong
-    // spot the instant the turn animation ends.
-    const sign = move.axis === "y" ? 1 : -1;
-    const degrees = move.direction * 90 * sign;
+    // rotateVector/rotateStickers are written to match CSS rotateX/Y/Z
+    // matrices exactly, so the model direction maps straight to the CSS
+    // rotation with no sign compensation. This only holds because
+    // renderCubiePosition renders positions in the same (non-mirrored)
+    // coordinate space the faces live in — see the note there.
+    const degrees = move.direction * 90;
     const axisName = move.axis.toUpperCase();
     return `rotate${axisName}(${degrees}deg)`;
   }
