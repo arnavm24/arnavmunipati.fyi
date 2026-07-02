@@ -709,7 +709,14 @@ if (rubiksWidget) {
   }
 
   function turnTransform(move) {
-    const degrees = move.direction * 90;
+    // renderCubiePosition renders the model's Y axis flipped (CSS Y grows
+    // downward), which only cancels out cleanly for Y-axis turns. X and Z
+    // turns rotate through Y, so their on-screen spin has to run the
+    // opposite way from the model's direction to land on the same result
+    // rotateVector/rotateStickers computes, or the colors snap to the wrong
+    // spot the instant the turn animation ends.
+    const sign = move.axis === "y" ? 1 : -1;
+    const degrees = move.direction * 90 * sign;
     const axisName = move.axis.toUpperCase();
     return `rotate${axisName}(${degrees}deg)`;
   }
