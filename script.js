@@ -815,9 +815,16 @@ if (rubiksWidget) {
     window.setTimeout(() => popover.classList.remove("is-feedback"), 390);
   }
 
+  const feedbackIcons = {
+    correct:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="5 12.5 10 17.5 19 6.5" /></svg>',
+    wrong:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" /></svg>',
+  };
+
   function showFeedback(isCorrect) {
     const resultIcon = rubiksWidget.querySelector("[data-rubiks-loading-result]");
-    resultIcon.textContent = isCorrect ? "\u2713" : "\u00d7";
+    resultIcon.innerHTML = isCorrect ? feedbackIcons.correct : feedbackIcons.wrong;
     resultIcon.classList.remove("is-correct", "is-wrong", "is-visible");
     resultIcon.classList.add(isCorrect ? "is-correct" : "is-wrong");
     void resultIcon.offsetWidth;

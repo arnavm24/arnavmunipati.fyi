@@ -1017,7 +1017,7 @@ h3 {
   display: flex;
   gap: 9px;
   align-items: center;
-  min-height: 22px;
+  min-height: 34px;
   margin: -2px 0 6px;
   opacity: 0;
   pointer-events: none;
@@ -1052,21 +1052,27 @@ h3 {
 
 .rubiks-loading-result {
   display: none;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border: 1.5px solid currentColor;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 2px solid currentColor;
   border-radius: 999px;
-  font-size: 0.92rem;
-  font-weight: 900;
-  line-height: 1;
   opacity: 0;
   transform: scale(0.7);
 }
 
 .rubiks-loading.is-result .rubiks-loading-result {
   display: grid;
+}
+
+.rubiks-loading-result svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .rubiks-loading-result.is-visible {
@@ -1262,17 +1268,29 @@ h3 {
 @keyframes loading-result-pop {
   0% {
     opacity: 0;
-    transform: scale(0.6);
+    transform: scale(0.6) translateX(0);
   }
 
-  55% {
+  32% {
     opacity: 1;
-    transform: scale(1.15);
+    transform: scale(1.18) translateX(-3px);
+  }
+
+  50% {
+    transform: scale(1.05) translateX(3px);
+  }
+
+  68% {
+    transform: scale(1.02) translateX(-2px);
+  }
+
+  86% {
+    transform: scale(1) translateX(1px);
   }
 
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateX(0);
   }
 }
 
