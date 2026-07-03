@@ -441,9 +441,9 @@ if (rubiksWidget) {
       answer: "Toronto",
     },
     {
-      prompt: "What kind of intelligence concept is Delation?",
-      options: ["Urban risk intelligence", "Fantasy sports ranking", "Personal finance planner", "Class scheduler"],
-      answer: "Urban risk intelligence",
+      prompt: "What kind of intelligence prototype is Delation?",
+      options: ["Emergency intelligence", "Fantasy sports ranking", "Personal finance planner", "Class scheduler"],
+      answer: "Emergency intelligence",
     },
     {
       prompt: "Which API framework is listed in Delation's stack?",
