@@ -642,8 +642,12 @@ h3 {
   transition-delay: 0ms, var(--reveal-delay, 0ms), var(--reveal-delay, 0ms);
 }
 
-.entry:hover {
-  background-color: color-mix(in srgb, var(--panel) 72%, transparent);
+/* Hover-capable pointers only: on touch screens a tap would leave the
+   tint stuck on the row until the next tap elsewhere. */
+@media (hover: hover) {
+  .entry:hover {
+    background-color: color-mix(in srgb, var(--panel) 72%, transparent);
+  }
 }
 
 .date {

@@ -264,7 +264,7 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 if (!prefersReducedMotion && "IntersectionObserver" in window) {
   const revealTargets = [
     ...document.querySelectorAll(
-      ".section-block:not(.hero) .section-heading, .section-block:not(.hero) .entry, .contact-block .contact-copy, .contact-block .email-button, .contact-block .contact-methods",
+      ".section-block:not(.hero) .section-heading, .section-block:not(.hero) .entry, .contact-block .contact-copy, .contact-block .email-row, .contact-block .contact-methods",
     ),
   ];
   const revealObserver = new IntersectionObserver(
