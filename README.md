@@ -1,23 +1,39 @@
-# Portfolio Site
+# arnavmunipati.fyi
 
-Static portfolio inspired by the dark editorial layout of `lukeblom.fyi`.
+Personal portfolio — live at [arnavmunipati.vercel.app](https://arnavmunipati.vercel.app/).
 
-The folder is named `arnavmunipati.fyi`, so the local path and deployment target can both carry your full name.
+Hand-built with vanilla HTML, CSS, and JavaScript. No frameworks, no build step.
 
-## Customize
+## Under the hood
 
-- LinkedIn is set to `https://www.linkedin.com/in/arnavmunipati/`.
-- GitHub is set to `https://github.com/arnavm24`.
-- Email is set to `arnav.munipati@gmail.com`.
-- Projects currently include ClutchCast AI and Delation.
-- The top-right Rubik's Cube opens a short portfolio quiz easter egg.
-- Social preview and icon assets live in `assets/`.
+- **Typography**: self-hosted variable fonts (Fraunces for display, Inter for UI), latin
+  subsets, preloaded, ~115KB total
+- **Rubik's cube quiz**: a fully functional 3D cube in pure CSS transforms + vanilla JS —
+  real layer-turn mechanics, sticker rotation math, and move-inversion solving (answer
+  correctly and it physically unwinds the scramble)
+- **Motion**: staggered scroll reveals, hero entrance sequence, theme cross-fade — all
+  collapsed under `prefers-reduced-motion`
+- **Theming**: dark/light with system-preference detection (pure CSS on first visit, stored
+  choice wins after a toggle), synced `theme-color`
+- **Accessibility**: skip link, consistent `:focus-visible` treatment, `aria-live` quiz
+  announcements, semantic landmarks
+- **Hardening**: strict CSP (self-only scripts/styles), security headers via `vercel.json`,
+  immutable font caching, print stylesheet, branded 404
 
 ## Files
 
-- `index.html` - content and structure
-- `styles.css` - responsive styling and light/dark themes
-- `script.js` - theme toggle, scroll progress, nav state, and cursor ribbon animation
-- `assets/` - favicon, mobile icon, and share preview image
+- `index.html` — content and structure
+- `styles.css` — design system, themes, motion, print styles
+- `script.js` — theme logic, scroll effects, cursor ribbon, cube engine and quiz
+- `404.html` — branded error page
+- `assets/` — fonts, icons, social preview card
 
-Open `index.html` directly in a browser, or host the folder on any static site service.
+## Run locally
+
+Any static server works:
+
+```bash
+npx serve .
+```
+
+Design originally inspired by the dark editorial layout of lukeblom.fyi.
