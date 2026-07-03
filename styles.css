@@ -41,6 +41,32 @@
   --accent-warm: #8f5d14;
 }
 
+/* First visit with no saved choice: follow the visitor's system theme.
+   script.js only sets data-theme once a preference is stored or the
+   toggle is clicked, and data-theme always wins over this block. Values
+   must mirror [data-theme="light"] above. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f5f2ea;
+    --panel: #eee9de;
+    --ink: #121819;
+    --muted: #5e6a6f;
+    --muted-strong: #2f3c41;
+    --line: #cfd4ce;
+    --accent: #16705f;
+    --accent-warm: #8f5d14;
+  }
+
+  :root:not([data-theme]) .theme-icon-moon {
+    display: none;
+  }
+
+  :root:not([data-theme]) .theme-icon-sun {
+    display: block;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -282,6 +308,27 @@ body.rubiks-active {
   padding-left: 22px;
   padding-right: 22px;
   border-right: 1px solid var(--line);
+}
+
+/* Progress thread: a faint track beside the section numbers whose accent
+   fill tracks overall scroll progress (--scroll-progress, set by JS). */
+.section-rail::before,
+.section-rail::after {
+  position: absolute;
+  top: 92px;
+  left: 8px;
+  width: 1px;
+  content: "";
+}
+
+.section-rail::before {
+  bottom: 28px;
+  background: color-mix(in srgb, var(--line) 85%, transparent);
+}
+
+.section-rail::after {
+  height: calc((100% - 92px - 28px) * var(--scroll-progress, 0));
+  background: var(--accent);
 }
 
 .section-rail a {
@@ -584,6 +631,19 @@ h3 {
   gap: 44px;
   padding: 28px 0;
   border-bottom: 1px solid var(--line);
+  /* This rule is later in the file than .reveal-ready, so it must carry
+     the reveal transition itself (per-property delays: hover tint stays
+     instant-ish, reveal keeps its stagger) or scroll reveals would lose
+     their animation on entries. */
+  transition:
+    background-color 180ms ease,
+    opacity 560ms ease,
+    transform 560ms cubic-bezier(0.22, 0.7, 0.2, 1);
+  transition-delay: 0ms, var(--reveal-delay, 0ms), var(--reveal-delay, 0ms);
+}
+
+.entry:hover {
+  background-color: color-mix(in srgb, var(--panel) 72%, transparent);
 }
 
 .date {

@@ -8,13 +8,39 @@ const sections = navLinks
   .map((link) => document.querySelector(link.getAttribute("href")))
   .filter(Boolean);
 
+const systemLightQuery = window.matchMedia("(prefers-color-scheme: light)");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const themeColors = { dark: "#0b1213", light: "#f5f2ea" };
+
+// No data-theme attribute means "follow the system" (see the
+// prefers-color-scheme block in styles.css); it is only set once the
+// visitor has an explicit preference.
+function effectiveTheme() {
+  return root.dataset.theme || (systemLightQuery.matches ? "light" : "dark");
+}
+
+function syncThemeColor() {
+  themeColorMeta?.setAttribute("content", themeColors[effectiveTheme()]);
+}
+
 function applyTheme(theme) {
   root.dataset.theme = theme;
   localStorage.setItem("portfolio-theme", theme);
+  syncThemeColor();
 }
 
 const storedTheme = localStorage.getItem("portfolio-theme");
-applyTheme(storedTheme || "dark");
+
+if (storedTheme) {
+  root.dataset.theme = storedTheme;
+}
+
+syncThemeColor();
+systemLightQuery.addEventListener("change", () => {
+  if (!root.dataset.theme) {
+    syncThemeColor();
+  }
+});
 
 const copyEmailButton = document.querySelector("[data-copy-email]");
 
@@ -43,7 +69,7 @@ themeToggle.addEventListener("click", () => {
   // Briefly opt the whole page into color transitions so the theme swap
   // cross-fades instead of snapping (see html.theme-fade in styles.css).
   root.classList.add("theme-fade");
-  applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+  applyTheme(effectiveTheme() === "dark" ? "light" : "dark");
   window.clearTimeout(themeFadeTimer);
   themeFadeTimer = window.setTimeout(() => root.classList.remove("theme-fade"), 320);
 });
@@ -152,7 +178,7 @@ if (supportsCursorRibbon) {
     context.clearRect(0, 0, window.innerWidth, window.innerHeight);
     context.globalCompositeOperation = "lighter";
     context.strokeStyle =
-      root.dataset.theme === "light" ? "rgba(22, 112, 95, 0.28)" : "rgba(168, 240, 210, 0.28)";
+      effectiveTheme() === "light" ? "rgba(22, 112, 95, 0.28)" : "rgba(168, 240, 210, 0.28)";
     context.lineWidth = 1;
     context.lineCap = "round";
     context.lineJoin = "round";
@@ -201,7 +227,10 @@ year.textContent = new Date().getFullYear();
 function updateProgress() {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const amount = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-  progress.style.width = `${Math.min(100, Math.max(0, amount))}%`;
+  const clamped = Math.min(100, Math.max(0, amount));
+  progress.style.width = `${clamped}%`;
+  // Unitless ratio consumed by the section rail's progress thread.
+  root.style.setProperty("--scroll-progress", `${clamped / 100}`);
 }
 
 window.addEventListener("scroll", updateProgress, { passive: true });
@@ -450,6 +479,11 @@ if (rubiksWidget) {
       prompt: "How many members did Arnav help prepare at FBL Canada?",
       options: ["60+", "10", "25", "150+"],
       answer: "60+",
+    },
+    {
+      prompt: "Where did members Arnav trained at FBL Canada go on to place?",
+      options: ["Canadian National Leadership Conference", "DECA Provincials", "Hack the North finals", "Model UN nationals"],
+      answer: "Canadian National Leadership Conference",
     },
     {
       prompt: "Which program was Arnav a fellow in?",
