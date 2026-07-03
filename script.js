@@ -267,9 +267,6 @@ if (rubiksWidget) {
   ];
   const turnDuration = 280;
   const turnPause = 25;
-  const mobileTurnDuration = 150;
-  const mobileTurnPause = 20;
-  const mobileCubeQuery = window.matchMedia("(max-width: 560px)");
   const cubes = cubeElements.map(createCubeState);
   let scrambleMoves = [];
   let isAnimating = false;
@@ -478,16 +475,15 @@ if (rubiksWidget) {
   }
 
   function renderCubiePosition(cube, cubie, spacing = getCubeSpacing(cube)) {
-    // Positions must render in the SAME coordinate space the cubie faces are
-    // placed in (see cubie-face-* in styles.css) so a layer turn's single
-    // rigid rotation carries both the orbit and the painted faces together.
-    // Do NOT negate any axis here: mirroring one axis makes position space
-    // opposite-handed to face space, and then no rotation direction can land
-    // both the cubie and its stickers correctly -- colors visibly swap at the
-    // end of X/Z turns. CSS +Y points down, so the model's +Y ("top") renders
-    // downward; the base rotateX tilt below is oriented to suit that.
+    // Model space is right-handed with +y = top, but CSS y grows downward,
+    // so positions render through a y-mirror (model +y -> CSS -y). The
+    // mirror keeps the model's top layer up-screen, where the stickered
+    // cubie-face-top faces point (styles.css); without it the cube renders
+    // upside down and the visually-top faces are the unstickered inner
+    // faces (a black top). The mirror flips the apparent spin of x/z
+    // rotations, which turnTransform compensates for.
     cubie.element.style.setProperty("--tx", `${cubie.position.x * spacing}px`);
-    cubie.element.style.setProperty("--ty", `${cubie.position.y * spacing}px`);
+    cubie.element.style.setProperty("--ty", `${cubie.position.y * -spacing}px`);
     cubie.element.style.setProperty("--tz", `${cubie.position.z * spacing}px`);
   }
 
@@ -717,12 +713,15 @@ if (rubiksWidget) {
   }
 
   function turnTransform(move) {
-    // rotateVector/rotateStickers are written to match CSS rotateX/Y/Z
-    // matrices exactly, so the model direction maps straight to the CSS
-    // rotation with no sign compensation. This only holds because
-    // renderCubiePosition renders positions in the same (non-mirrored)
-    // coordinate space the faces live in — see the note there.
-    const degrees = move.direction * 90;
+    // Because positions render through the y-mirror (see
+    // renderCubiePosition), CSS rotateY spins the same way as the model's
+    // y rotation, while CSS rotateX/rotateZ spin the opposite way (both
+    // rotate through the mirrored y axis). Flip the sign for x/z so the
+    // animated spin lands exactly on the state that rotateVector and
+    // rotateStickers compute -- otherwise stickers jump to different faces
+    // the moment the turn ends.
+    const sign = move.axis === "y" ? 1 : -1;
+    const degrees = move.direction * 90 * sign;
     const axisName = move.axis.toUpperCase();
     return `rotate${axisName}(${degrees}deg)`;
   }
@@ -741,10 +740,6 @@ if (rubiksWidget) {
   }
 
   function animateMove(cubeList, move) {
-    if (mobileCubeQuery.matches) {
-      return animateMobileMove(cubeList, move);
-    }
-
     const layerCubies = cubeList.flatMap((cube) =>
       cube.cubies
         .filter((cubie) => cubie.position[move.axis] === move.layer)
@@ -763,24 +758,6 @@ if (rubiksWidget) {
         cubeList.forEach((cube) => applyMove(cube, move));
         resolve();
       }, turnDuration);
-    });
-  }
-
-  function animateMobileMove(cubeList, move) {
-    cubeList.forEach((cube) => {
-      cube.element.classList.remove("is-mobile-turning");
-      void cube.element.offsetWidth;
-      cube.element.classList.add("is-mobile-turning");
-    });
-
-    return new Promise((resolve) => {
-      window.setTimeout(() => {
-        cubeList.forEach((cube) => {
-          applyMove(cube, move);
-          cube.element.classList.remove("is-mobile-turning");
-        });
-        resolve();
-      }, mobileTurnDuration);
     });
   }
 
@@ -858,21 +835,27 @@ if (rubiksWidget) {
     const activeCubes = getActiveCubes();
     const moves =
       finalState === "solved"
-        ? (scrambleMoves.length ? scrambleMoves.slice().reverse().map(invertMove) : createMoveSequence(5))
+        ? scrambleMoves.slice().reverse().map(invertMove)
         : createMoveSequence(6);
 
     for (const move of moves) {
       await animateMove(activeCubes, move);
-      await new Promise((resolve) =>
-        window.setTimeout(resolve, mobileCubeQuery.matches ? mobileTurnPause : turnPause),
-      );
+      await new Promise((resolve) => window.setTimeout(resolve, turnPause));
     }
 
     if (finalState === "solved") {
-      setAllCubesSolved(true);
+      // Replaying the full scramble history inverted has physically walked
+      // the cube back to its solved arrangement, so re-render the SAME
+      // orientation (never randomize here) -- this is drift-proofing, not a
+      // visible change. Randomizing recolored the whole cube the instant
+      // the solve animation finished.
+      setAllCubesSolved(false);
       scrambleMoves = [];
     } else {
-      scrambleMoves = moves;
+      // Wrong answers scramble again without solving in between, so
+      // accumulate: a later solve must unwind every move made since the
+      // last solved state, not just the most recent six.
+      scrambleMoves = scrambleMoves.concat(moves);
     }
 
     isAnimating = false;
@@ -986,6 +969,11 @@ if (rubiksWidget) {
 
     if (isOpen) {
       syncModalCubeToTrigger();
+      // The modal cube was just reset to the trigger's solved state, so any
+      // scramble history from an earlier open no longer applies to it. Left
+      // in place, a later solve would unwind moves this cube never made and
+      // end on a snap instead of solved.
+      scrambleMoves = [];
     }
 
     if (!isOpen) {

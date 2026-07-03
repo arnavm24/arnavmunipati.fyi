@@ -809,11 +809,6 @@ h3 {
   animation: none;
 }
 
-.rubiks-mini.is-mobile-turning,
-.rubiks-widget.is-solving .rubiks-mini-large.is-mobile-turning {
-  animation: mobile-cube-turn 150ms ease-in-out;
-}
-
 .rubiks-cubie {
   position: absolute;
   top: 50%;
@@ -861,9 +856,10 @@ h3 {
     inset 0 0 0 0.6px rgba(244, 247, 245, 0.18),
     inset 0 -3px 5px rgba(0, 0, 0, 0.12);
   opacity: var(--sticker-opacity, 0);
-  transition:
-    background 140ms ease,
-    opacity 140ms ease;
+  /* No transition here: sticker reassignment at the end of a layer turn
+     must be instantaneous to be invisible. A crossfade outlives the 25ms
+     pause between moves and reads as colors changing on faces that are
+     not part of the current move. */
 }
 
 .cubie-face-front {
@@ -1228,17 +1224,6 @@ h3 {
 
   100% {
     transform: var(--turn-rotate) translate3d(var(--tx), var(--ty), var(--tz));
-  }
-}
-
-@keyframes mobile-cube-turn {
-  0%,
-  100% {
-    transform: translateZ(0) rotateX(-24deg) rotateY(-35deg) scale(1);
-  }
-
-  45% {
-    transform: translateZ(0) rotateX(-28deg) rotateY(-21deg) scale(1.03);
   }
 }
 
