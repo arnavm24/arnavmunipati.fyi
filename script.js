@@ -270,6 +270,11 @@ if (rubiksWidget) {
   const cubes = cubeElements.map(createCubeState);
   let scrambleMoves = [];
   let isAnimating = false;
+  // Bumped whenever the popover opens or closes. In-flight twist loops
+  // compare their captured value against this and abort at the next
+  // checkpoint, so a round abandoned mid-animation can't keep mutating a
+  // cube that was just reset for a fresh round.
+  let twistEpoch = 0;
   let pendingCubeRender = 0;
   let delayedCubeRender = 0;
   let questionQueue = [];
@@ -739,7 +744,7 @@ if (rubiksWidget) {
     });
   }
 
-  function animateMove(cubeList, move) {
+  function animateMove(cubeList, move, epoch) {
     const layerCubies = cubeList.flatMap((cube) =>
       cube.cubies
         .filter((cubie) => cubie.position[move.axis] === move.layer)
@@ -755,7 +760,12 @@ if (rubiksWidget) {
 
     return new Promise((resolve) => {
       window.setTimeout(() => {
-        cubeList.forEach((cube) => applyMove(cube, move));
+        // If the popover opened/closed while this turn was animating, the
+        // cube state was already reset for a new round: applying the move
+        // now would corrupt it.
+        if (epoch === twistEpoch) {
+          cubeList.forEach((cube) => applyMove(cube, move));
+        }
         resolve();
       }, turnDuration);
     });
@@ -832,6 +842,7 @@ if (rubiksWidget) {
 
     isAnimating = true;
     setBusy(true);
+    const epoch = twistEpoch;
     const activeCubes = getActiveCubes();
     const moves =
       finalState === "solved"
@@ -839,7 +850,15 @@ if (rubiksWidget) {
         : createMoveSequence(6);
 
     for (const move of moves) {
-      await animateMove(activeCubes, move);
+      await animateMove(activeCubes, move, epoch);
+      if (epoch !== twistEpoch) {
+        // Round was abandoned (popover opened/closed) mid-animation; the
+        // cube was reset elsewhere, so stop without touching state or
+        // calling onComplete.
+        isAnimating = false;
+        setBusy(false);
+        return;
+      }
       await new Promise((resolve) => window.setTimeout(resolve, turnPause));
     }
 
@@ -962,6 +981,13 @@ if (rubiksWidget) {
   }
 
   function setQuizOpen(isOpen) {
+    if (popover.hidden === !isOpen) return;
+
+    // Invalidate any twist loop still running from the previous open/closed
+    // state; it aborts at its next checkpoint instead of mutating the cube
+    // we are about to reset.
+    twistEpoch += 1;
+
     popover.hidden = !isOpen;
     rubiksWidget.classList.toggle("is-open", isOpen);
     document.body.classList.toggle("rubiks-active", isOpen);
@@ -969,16 +995,21 @@ if (rubiksWidget) {
 
     if (isOpen) {
       syncModalCubeToTrigger();
-      // The modal cube was just reset to the trigger's solved state, so any
-      // scramble history from an earlier open no longer applies to it. Left
-      // in place, a later solve would unwind moves this cube never made and
-      // end on a snap instead of solved.
+      // The modal cube was just reset to the trigger's solved state, so the
+      // scramble history and any half-finished question no longer describe
+      // it. Restart the round from the intro so the puzzle is always
+      // solvable: a stale question over an already-solved cube left nothing
+      // to solve.
       scrambleMoves = [];
+      renderIntro();
     }
 
     if (!isOpen) {
       popover.classList.remove("is-feedback");
-      loading?.classList.remove("is-active");
+      loading?.classList.remove("is-active", "is-result");
+      rubiksWidget
+        .querySelector("[data-rubiks-loading-result]")
+        ?.classList.remove("is-visible");
     }
   }
 
