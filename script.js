@@ -16,6 +16,27 @@ function applyTheme(theme) {
 const storedTheme = localStorage.getItem("portfolio-theme");
 applyTheme(storedTheme || "dark");
 
+const copyEmailButton = document.querySelector("[data-copy-email]");
+
+if (copyEmailButton) {
+  const copyLabel = copyEmailButton.querySelector("[data-copy-label]");
+  let copyResetTimer = 0;
+
+  copyEmailButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(copyEmailButton.dataset.copyEmail);
+      copyLabel.textContent = "Copied ✓";
+    } catch {
+      copyLabel.textContent = "Copy failed";
+    }
+
+    window.clearTimeout(copyResetTimer);
+    copyResetTimer = window.setTimeout(() => {
+      copyLabel.textContent = "Copy";
+    }, 1800);
+  });
+}
+
 let themeFadeTimer = 0;
 
 themeToggle.addEventListener("click", () => {
