@@ -16,8 +16,15 @@ function applyTheme(theme) {
 const storedTheme = localStorage.getItem("portfolio-theme");
 applyTheme(storedTheme || "dark");
 
+let themeFadeTimer = 0;
+
 themeToggle.addEventListener("click", () => {
+  // Briefly opt the whole page into color transitions so the theme swap
+  // cross-fades instead of snapping (see html.theme-fade in styles.css).
+  root.classList.add("theme-fade");
   applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
+  window.clearTimeout(themeFadeTimer);
+  themeFadeTimer = window.setTimeout(() => root.classList.remove("theme-fade"), 320);
 });
 
 const supportsCursorRibbon =
@@ -198,6 +205,44 @@ const observer = new IntersectionObserver(
 );
 
 sections.forEach((section) => observer.observe(section));
+
+// Scroll reveals: below-the-fold content eases in as it enters the viewport,
+// staggered per sibling. The hero has its own entrance animation, and
+// reduced-motion users never get elements hidden in the first place.
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (!prefersReducedMotion && "IntersectionObserver" in window) {
+  const revealTargets = [
+    ...document.querySelectorAll(
+      ".section-block:not(.hero) .section-heading, .section-block:not(.hero) .entry, .contact-block .contact-copy, .contact-block .email-button, .contact-block .contact-methods",
+    ),
+  ];
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.remove("reveal-pending");
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+  );
+
+  revealTargets.forEach((element) => {
+    const revealSiblings = [...element.parentElement.children].filter((child) =>
+      revealTargets.includes(child),
+    );
+    const stagger = Math.min(Math.max(revealSiblings.indexOf(element), 0), 5) * 90;
+    element.style.setProperty("--reveal-delay", `${stagger}ms`);
+    // Hide instantly BEFORE arming the transition (reveal-ready), with a
+    // forced reflow between the two: adding both in one style update would
+    // animate the hide itself, flashing near-fold content on load.
+    element.classList.add("reveal-pending");
+    void element.offsetWidth;
+    element.classList.add("reveal-ready");
+    revealObserver.observe(element);
+  });
+}
 
 window.addEventListener("load", () => {
   if (!window.location.hash) return;

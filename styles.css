@@ -73,6 +73,27 @@ body::before {
   opacity: 0.18;
 }
 
+/* Faint film grain over everything for editorial texture. */
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.05;
+}
+
+[data-theme="light"] body::after {
+  opacity: 0.035;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 32%, transparent);
+  color: var(--ink);
+}
+
 .cursor-ribbon {
   position: fixed;
   inset: 0;
@@ -260,6 +281,37 @@ body.rubiks-active {
   scroll-margin-top: calc(var(--header) + 24px);
 }
 
+/* Scroll reveals: script.js marks elements reveal-ready + reveal-pending,
+   then removes reveal-pending as they enter the viewport (staggered via
+   --reveal-delay). Without JS nothing is ever hidden. */
+.reveal-ready {
+  transition:
+    opacity 560ms ease,
+    transform 560ms cubic-bezier(0.22, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+/* Applied briefly by the theme toggle so dark/light swaps cross-fade
+   instead of snapping. Kept ahead of the reduced-motion block so that
+   block still wins for users who opt out of motion. */
+html.theme-fade,
+html.theme-fade *:not(.cubie-sticker),
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition:
+    background-color 240ms ease,
+    color 240ms ease,
+    border-color 240ms ease,
+    fill 240ms ease,
+    stroke 240ms ease,
+    box-shadow 240ms ease !important;
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
@@ -272,6 +324,53 @@ body.rubiks-active {
 .hero-main {
   min-width: 0;
   max-width: 720px;
+}
+
+/* One-time entrance: the hero assembles top to bottom on load. The
+   reduced-motion block at the end of this file collapses duration and
+   delay, so those users see the final state immediately. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-main > * {
+  animation: rise-in 620ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+}
+
+.hero-main > *:nth-child(1) {
+  animation-delay: 40ms;
+}
+
+.hero-main > *:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.hero-main > *:nth-child(3) {
+  animation-delay: 200ms;
+}
+
+.hero-main > *:nth-child(4) {
+  animation-delay: 280ms;
+}
+
+.hero-main > *:nth-child(5) {
+  animation-delay: 360ms;
+}
+
+.hero-main > *:nth-child(6) {
+  animation-delay: 440ms;
+}
+
+.hero .focus-panel {
+  animation: rise-in 620ms cubic-bezier(0.22, 0.7, 0.2, 1) 520ms both;
 }
 
 .eyebrow {
@@ -1570,7 +1669,9 @@ h3 {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
   }
 
