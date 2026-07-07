@@ -103,7 +103,7 @@
             <p class="hero-copy">
               I spend my days in software at one of Canada's largest banks and the rest of my
               time building things that get measured: an NBA win-probability engine tested on
-              28,000+ unseen game moments and an emergency-response prototype shipped in a
+              87,000+ unseen game moments and an emergency-response prototype shipped in a
               36-hour hackathon, with more in the works.
             </p>
 
@@ -278,22 +278,23 @@
                 <h3>ClutchCast AI</h3>
                 <p>
                   Predicts an NBA team's chance of winning at every moment of a live game. The
-                  platform turns raw play-by-play data into 85 predictive signals, tests four
-                  different models against each other on games none of them have seen before,
-                  and automatically promotes the most accurate one to make live predictions.
+                  platform turns raw play-by-play data from three NBA seasons into predictive
+                  signals, tests six different models against each other on games none of them
+                  have seen before, and automatically promotes the best one to make live
+                  predictions in the browser.
                 </p>
                 <dl class="project-facts" aria-label="ClutchCast AI project details">
                   <div>
                     <dt>Stack</dt>
-                    <dd>Python, pandas, scikit-learn, PyTorch, Streamlit, Plotly, Flask, SocketIO, nba_api</dd>
+                    <dd>Python, pandas, scikit-learn, PyTorch, Next.js, TypeScript, Streamlit, Plotly, Flask, SocketIO, nba_api</dd>
                   </div>
                   <div>
                     <dt>Evaluation</dt>
-                    <dd>Four models (rule-based baseline, logistic regression, random forest, PyTorch neural net) ranked by Brier score, log-loss, ROC-AUC, and accuracy on 28,463 plays across 60 games held out from training, drawn from a 300-game season sample</dd>
+                    <dd>Six models (rule-based baseline, logistic regression, random forest, gradient boosting, GRU sequence model, PyTorch neural net) ranked by Brier score, log-loss, ROC-AUC, and accuracy on 87,694 game states across 180 games held out from training, from a 900-game three-season sample</dd>
                   </div>
                   <div>
                     <dt>Result</dt>
-                    <dd>The neural network won: 71.5% accuracy on games it had never seen, with the strongest probability calibration of the four (0.180 Brier score, 0.81 ROC-AUC)</dd>
+                    <dd>The neural network won: 73.1% accuracy on games it had never seen, with the strongest probability calibration of the six (0.174 Brier score, 0.815 ROC-AUC)</dd>
                   </div>
                 </dl>
                 <a class="inline-action" href="https://clutchcast-ai.vercel.app/" target="_blank" rel="noreferrer">
