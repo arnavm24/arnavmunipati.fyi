@@ -102,9 +102,9 @@
             </p>
             <p class="hero-copy">
               I spend my days in software at one of Canada's largest banks and the rest of my
-              time building things that get measured: an NBA win-probability engine validated on
-              28,000+ held-out plays and an edge-compute emergency prototype shipped in a 36-hour
-              hackathon, with more in the works.
+              time building things that get measured: an NBA win-probability engine tested on
+              28,000+ unseen game moments and an emergency-response prototype shipped in a
+              36-hour hackathon, with more in the works.
             </p>
 
             <div class="tag-line" aria-label="Profile highlights">
@@ -260,7 +260,7 @@
 
           <div class="section-heading">
             <h2 id="projects-title">Projects</h2>
-            <p>Applied projects across sports intelligence, AI systems, and urban operations.</p>
+            <p>Applied projects across sports analytics, AI systems, and emergency response.</p>
           </div>
 
           <div class="entry-list compact">
@@ -275,11 +275,10 @@
                 </div>
                 <h3>ClutchCast AI</h3>
                 <p>
-                  NBA win-probability platform that engineers 85 game-state features from
-                  play-by-play data and benchmarks four models head-to-head (a rule-based
-                  baseline, logistic regression, random forest, and a PyTorch neural net) on
-                  held-out games split by game ID to prevent leakage, then auto-selects the top
-                  performer as the live champion model for real-time inference.
+                  Predicts an NBA team's chance of winning at every moment of a live game. The
+                  platform turns raw play-by-play data into 85 predictive signals, tests four
+                  different models against each other on games none of them have seen before,
+                  and automatically promotes the most accurate one to make live predictions.
                 </p>
                 <dl class="project-facts" aria-label="ClutchCast AI project details">
                   <div>
@@ -288,11 +287,11 @@
                   </div>
                   <div>
                     <dt>Evaluation</dt>
-                    <dd>Ranked by Brier score, log-loss, ROC-AUC, and accuracy on 28,463 held-out plays across 60 games from a 300-game season sample</dd>
+                    <dd>Four models (rule-based baseline, logistic regression, random forest, PyTorch neural net) ranked by Brier score, log-loss, ROC-AUC, and accuracy on 28,463 plays across 60 games held out from training, drawn from a 300-game season sample</dd>
                   </div>
                   <div>
                     <dt>Result</dt>
-                    <dd>PyTorch neural net won on Brier score (0.180), the primary calibration metric, reaching 71.5% accuracy and a 0.81 ROC-AUC as the live champion model</dd>
+                    <dd>The neural network won: 71.5% accuracy on games it had never seen, with the strongest probability calibration of the four (0.180 Brier score, 0.81 ROC-AUC)</dd>
                   </div>
                 </dl>
                 <a class="inline-action" href="https://github.com/arnavm24/clutchcast-ai" target="_blank" rel="noreferrer">
@@ -316,10 +315,10 @@
                 </div>
                 <h3>Delation</h3>
                 <p>
-                  Edge-compute emergency intelligence prototype built at the NVIDIA Spark
-                  Hackathon Toronto, combining live voice, video, and GPS incident reports with
-                  Toronto Open Data, floodplain, and weather feeds to flag ward-level risk with
-                  no cloud calls required.
+                  Emergency-response prototype built at the NVIDIA Spark Hackathon in Toronto.
+                  Incident reports arrive as voice, video, and location; the system layers them
+                  with city data, flood maps, and live weather to flag which neighbourhoods are
+                  most at risk, all running locally with no cloud required.
                 </p>
                 <dl class="project-facts" aria-label="Delation project details">
                   <div>
@@ -328,11 +327,11 @@
                   </div>
                   <div>
                     <dt>Role</dt>
-                    <dd>One of five engineers on the team. Built the FastAPI gateway: real-time speech-to-text and text-to-speech, WebSocket telemetry, and REST endpoints aggregating Toronto Open Data, TRCA floodplain, and Environment Canada weather into ward-level risk scores.</dd>
+                    <dd>One of five engineers on the team. Built the FastAPI gateway, the system's front door: it receives every incident report, converts speech to text and back, streams live status updates, and merges Toronto Open Data, floodplain maps, and Environment Canada weather into a risk score for each neighbourhood.</dd>
                   </div>
                   <div>
                     <dt>Outcome</dt>
-                    <dd>Shipped a fully working prototype in the 36-hour hackathon window, targeting sub-100ms end-to-end incident analysis (TensorRT-LLM INT4 on the team's on-site GB10 hardware).</dd>
+                    <dd>Shipped a fully working prototype inside the 36-hour hackathon window, built to analyze an incoming incident in under a tenth of a second on the team's on-site NVIDIA hardware.</dd>
                   </div>
                 </dl>
                 <a class="inline-action" href="https://github.com/AdrianShah/NVIDIA-SparkHacks" target="_blank" rel="noreferrer">
