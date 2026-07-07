@@ -152,6 +152,12 @@ main:focus-visible {
   outline: none;
 }
 
+/* The quiz dialog receives focus programmatically when it opens. */
+.rubiks-popover:focus,
+.rubiks-popover:focus-visible {
+  outline: none;
+}
+
 .skip-link {
   position: fixed;
   top: 14px;
@@ -204,6 +210,7 @@ body.rubiks-active {
   padding: 0 max(28px, calc((100vw - var(--max)) / 2));
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--bg) 94%, transparent);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
 }
 
@@ -950,6 +957,7 @@ h3 {
   background:
     radial-gradient(circle at 35% 18%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 32%),
     rgba(7, 12, 13, 0.76);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 
@@ -1193,6 +1201,7 @@ h3 {
   box-shadow:
     0 28px 90px rgba(0, 0, 0, 0.46),
     0 0 36px color-mix(in srgb, var(--accent) 12%, transparent);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   transform: translate(-50%, -50%);
 }
@@ -1673,7 +1682,7 @@ h3 {
 
 @media (max-width: 560px) {
   .site-header {
-    grid-template-columns: minmax(0, 1fr) 34px;
+    grid-template-columns: minmax(0, 1fr) 40px;
     gap: 10px;
     min-height: 66px;
     padding: 0 16px;
@@ -1688,9 +1697,10 @@ h3 {
     letter-spacing: 0.06em;
   }
 
+  /* Kept at 40px so the tap target stays close to the 44px guideline. */
   .theme-button {
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
   }
 
   .brand {
@@ -1888,6 +1898,7 @@ h3 {
     padding: 0 0 12pt;
     border-bottom: 1pt solid var(--line);
     background: none;
+    -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
 

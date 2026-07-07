@@ -399,7 +399,15 @@
     </footer>
 
     <div class="rubiks-widget" data-rubiks-widget>
-      <div class="rubiks-popover" id="rubiks-popover" hidden>
+      <div
+        class="rubiks-popover"
+        id="rubiks-popover"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="rubiks-title"
+        tabindex="-1"
+        hidden
+      >
         <div class="rubiks-popover-header">
           <div class="rubiks-heading">
             <div class="rubiks-kicker-row">
@@ -410,7 +418,7 @@
                   <path d="M15 13h5v6h-5.1" />
                 </svg>
               </span>
-              <p>Puzzle Check</p>
+              <p id="rubiks-title">Puzzle Check</p>
             </div>
             <p class="rubiks-subtitle">Let's see how well you know Arnav.</p>
           </div>

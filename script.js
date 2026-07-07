@@ -1080,6 +1080,15 @@ if (rubiksWidget) {
     });
   }
 
+  // The quiz is a modal dialog: while open, the rest of the page is inert
+  // (unreachable by keyboard and screen readers), and focus moves into the
+  // dialog and back to the trigger on close. Without the focus move, opening
+  // would silently drop focus to <body> because the trigger becomes
+  // display:none while the popover is open.
+  const inertTargets = [
+    ...document.querySelectorAll(".skip-link, .site-header, main, .site-footer"),
+  ];
+
   function setQuizOpen(isOpen) {
     if (popover.hidden === !isOpen) return;
 
@@ -1092,6 +1101,13 @@ if (rubiksWidget) {
     rubiksWidget.classList.toggle("is-open", isOpen);
     document.body.classList.toggle("rubiks-active", isOpen);
     toggleButton.setAttribute("aria-expanded", String(isOpen));
+    inertTargets.forEach((element) => {
+      if (isOpen) {
+        element.setAttribute("inert", "");
+      } else {
+        element.removeAttribute("inert");
+      }
+    });
 
     if (isOpen) {
       syncModalCubeToTrigger();
@@ -1102,6 +1118,7 @@ if (rubiksWidget) {
       // to solve.
       scrambleMoves = [];
       renderIntro();
+      popover.focus();
     }
 
     if (!isOpen) {
@@ -1110,6 +1127,7 @@ if (rubiksWidget) {
       rubiksWidget
         .querySelector("[data-rubiks-loading-result]")
         ?.classList.remove("is-visible");
+      toggleButton.focus();
     }
   }
 
