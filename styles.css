@@ -717,6 +717,10 @@ h3 {
   margin-top: 12px;
 }
 
+.entry .inline-action + .inline-action {
+  margin-left: 22px;
+}
+
 .project-facts {
   display: grid;
   gap: 8px;
