@@ -376,7 +376,7 @@ if (rubiksWidget) {
   const questionHistory = [];
   const questions = [
     {
-      prompt: "Which company is Arnav currently a Quality Engineer Co-op at?",
+      prompt: "Which company was Arnav a Quality Engineer Co-op at?",
       options: ["CIBC", "RBC", "Shopify", "TD"],
       answer: "CIBC",
     },
@@ -401,7 +401,7 @@ if (rubiksWidget) {
       answer: "Ivey Business leadership certificate",
     },
     {
-      prompt: "Which area is listed in Arnav's current CIBC role?",
+      prompt: "Which area was Arnav's CIBC co-op in?",
       options: ["Global Technology, Data and AI", "Retail Banking", "Capital Markets Sales", "Wealth Advisory"],
       answer: "Global Technology, Data and AI",
     },
