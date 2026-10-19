@@ -461,14 +461,9 @@ if (rubiksWidget) {
       answer: "FastAPI API gateway",
     },
     {
-      prompt: "Which city organization did Arnav work for as a swim instructor?",
-      options: ["City of Brampton", "City of Toronto", "City of Mississauga", "City of London"],
-      answer: "City of Brampton",
-    },
-    {
-      prompt: "About how many students did Arnav teach per swim session cycle?",
-      options: ["80+", "15", "25", "200+"],
-      answer: "80+",
+      prompt: "Which design team is Arnav an electrical team member on?",
+      options: ["Western Formula Racing", "Western Baja", "Western Rocketry", "Western Solar Car"],
+      answer: "Western Formula Racing",
     },
     {
       prompt: "Which organization did Arnav support as a training coordinator?",
