@@ -710,6 +710,15 @@ h3 {
   object-fit: contain;
 }
 
+/* Wide wordmark logos (white-on-transparent artwork): dark tile in both
+   themes so the mark stays visible, natural aspect instead of a square. */
+.logo-link img.logo-img-wide {
+  width: auto;
+  max-width: 54px;
+  padding: 2px 6px;
+  background: #0b1213;
+}
+
 .logo-link span {
   white-space: nowrap;
 }
