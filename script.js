@@ -396,11 +396,6 @@ if (rubiksWidget) {
       answer: "Engineering",
     },
     {
-      prompt: "Which business certificate is Arnav pursuing?",
-      options: ["Ivey Business leadership certificate", "CPA certificate", "Google UX certificate", "AWS Cloud certificate"],
-      answer: "Ivey Business leadership certificate",
-    },
-    {
       prompt: "Which area was Arnav's CIBC co-op in?",
       options: ["Global Technology, Data and AI", "Retail Banking", "Capital Markets Sales", "Wealth Advisory"],
       answer: "Global Technology, Data and AI",
@@ -441,9 +436,9 @@ if (rubiksWidget) {
       answer: "Toronto",
     },
     {
-      prompt: "What kind of intelligence prototype is Delation?",
-      options: ["Emergency intelligence", "Fantasy sports ranking", "Personal finance planner", "Class scheduler"],
-      answer: "Emergency intelligence",
+      prompt: "What kind of prototype is Delation?",
+      options: ["Emergency response", "Fantasy sports ranking", "Personal finance planner", "Class scheduler"],
+      answer: "Emergency response",
     },
     {
       prompt: "Which API framework is listed in Delation's stack?",
