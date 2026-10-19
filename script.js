@@ -407,12 +407,12 @@ if (rubiksWidget) {
     },
     {
       prompt: "What is Arnav currently exploring?",
-      options: ["AI and engineering systems", "Film production", "Real estate law", "Digital illustration"],
-      answer: "AI and engineering systems",
+      options: ["Power electronics and embedded systems", "Film production", "Real estate law", "Digital illustration"],
+      answer: "Power electronics and embedded systems",
     },
     {
       prompt: "Which project is NBA-focused?",
-      options: ["ClutchCast AI", "Delation", "SHAD", "FBL Canada"],
+      options: ["ClutchCast AI", "Delation", "WE Bots", "Western Formula Racing"],
       answer: "ClutchCast AI",
     },
     {
@@ -464,31 +464,6 @@ if (rubiksWidget) {
       prompt: "Which design team is Arnav an electrical team member on?",
       options: ["Western Formula Racing", "Western Baja", "Western Rocketry", "Western Solar Car"],
       answer: "Western Formula Racing",
-    },
-    {
-      prompt: "Which organization did Arnav support as a training coordinator?",
-      options: ["FBL Canada", "DECA Ontario", "SHAD Canada", "Western Engineering"],
-      answer: "FBL Canada",
-    },
-    {
-      prompt: "How many members did Arnav help prepare at FBL Canada?",
-      options: ["60+", "10", "25", "150+"],
-      answer: "60+",
-    },
-    {
-      prompt: "Where did members Arnav trained at FBL Canada go on to place?",
-      options: ["Canadian National Leadership Conference", "DECA Provincials", "Hack the North finals", "Model UN nationals"],
-      answer: "Canadian National Leadership Conference",
-    },
-    {
-      prompt: "Which program was Arnav a fellow in?",
-      options: ["SHAD", "YC Startup School", "FIRST Robotics", "Junior Achievement"],
-      answer: "SHAD",
-    },
-    {
-      prompt: "What focus is listed for SHAD?",
-      options: ["STEAM and entrepreneurship", "Accounting and tax", "Marine biology", "Film editing"],
-      answer: "STEAM and entrepreneurship",
     },
     {
       prompt: "What is the best way to reach Arnav?",
