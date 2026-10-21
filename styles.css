@@ -730,7 +730,8 @@ h3 {
    themes so the mark stays visible, natural aspect instead of a square. */
 .logo-link img.logo-img-wide {
   width: auto;
-  max-width: 54px;
+  height: 20px;
+  max-width: 64px;
   padding: 2px 6px;
   background: #0b1213;
 }
